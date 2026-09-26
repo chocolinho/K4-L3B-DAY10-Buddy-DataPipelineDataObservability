@@ -9,9 +9,9 @@
 
 | STT | Họ và tên | MSSV | Email | Vai trò | Báo cáo cá nhân dự kiến |
 |---:|---|---|---|---|---|
-| 1 | Nguyễn Đình Thái | 2A202602718 | nguyendinhthai943@gmail.com | Trưởng nhóm · Pipeline & RAG | `report/<MSSV>_NguyenDinhThai.md` |
-| 2 | Vũ Tiến Linh | 2A202602657 | vutienlinh95@gmail.com | Data Foundation & Recovery | `report/<MSSV>_VuTienLinh.md` |
-| 3 | Dương Đình Long | 2A202602474 | dinhlongrmx@gmail.com | Observability & Evaluation | `report/<MSSV>_DuongDinhLong.md` |
+| 1 | Nguyễn Đình Thái | 2A202602718 | nguyendinhthai943@gmail.com | Trưởng nhóm · Pipeline & RAG | `report/2A202602718_NguyenDinhThai.md` |
+| 2 | Vũ Tiến Linh | 2A202602657 | vutienlinh95@gmail.com | Data Foundation & Recovery | `report/2A202602657_VuTienLinh.md` |
+| 3 | Dương Đình Long | 2A202602474 | dinhlongrmx@gmail.com | Observability & Evaluation | `report/2A202602474_DuongDinhLong.md` |
 
 ## 2. Phạm vi phụ trách và sản phẩm bàn giao
 
@@ -91,30 +91,30 @@ Mỗi người tự bổ sung sau khi thực hiện, phân biệt phần hoàn t
 ### Vũ Tiến Linh — 2A202602657
 
 - **Vai trò:** Data Foundation & Recovery.
-- **Công việc chi tiết đã hoàn thành:** [Tự bổ sung theo thực tế]
-- **Checkpoint đã đóng góp:** [Tự bổ sung]
-- **Bằng chứng — commit / log / artifact:** [Tự bổ sung]
-- **Phần thử nghiệm / Chưa hoàn thành / Blocker:** [Tự bổ sung]
-- **Điều học được / Đóng góp chính:** [Tự bổ sung]
+- **Công việc chi tiết đã hoàn thành:** Hoàn thiện `crossref.py` (parse Crossref payload, fetch source kèm fallback offline, load raw records); hoàn thiện `cleaning.py` (loại bỏ JATS XML tag, chuẩn hóa khoảng trắng, tính `age_days`, khử trùng lặp `paper_id`, tạo `text_for_embedding` 5 phần); triển khai `corruption.py` (tiêm 6 kịch bản sự cố dữ liệu không làm biến đổi baseline, xuất `corruption_log.json`); xây dựng chuỗi Idempotent Repair raw-to-clean.
+- **Checkpoint đã đóng góp:** CP0, CP1, CP4, CP5.
+- **Bằng chứng — commit / log / artifact:** File `data/raw/crossref_records.json` (24 bài); `data/clean/papers_clean.csv / .json` (24 dòng sạch); `data/clean/papers_clean_corrupted.csv / .json` (25 dòng lỗi); `data/results/corruption_log.json`; `data/clean/papers_clean_repaired.csv / .json` (24 dòng phục hồi chuẩn); bộ test `tests/test_corruption.py` (1/1 PASSED).
+- **Phần thử nghiệm / Chưa hoàn thành / Blocker:** Đã kiểm chứng tính Idempotent của Repair (cùng SHA-256 sau các lần chạy lặp). Không còn blocker.
+- **Điều học được / Đóng góp chính:** Giữ vững nguyên tắc bất khả xâm phạm của Data Lineage từ raw data; bảo toàn trạng thái non-mutating khi tiêm lỗi dữ liệu; thiết kế hàm repair có tính idempotent cao.
 - **Báo cáo cá nhân:** `report/2A202602657_VuTienLinh.md`.
 
 ### Dương Đình Long — 2A202602474
 
 - **Vai trò:** Observability & Evaluation.
-- **Công việc chi tiết đã hoàn thành:** [Tự bổ sung theo thực tế]
-- **Checkpoint đã đóng góp:** [Tự bổ sung]
-- **Bằng chứng — commit / log / artifact:** [Tự bổ sung]
-- **Phần thử nghiệm / Chưa hoàn thành / Blocker:** [Tự bổ sung]
-- **Điều học được / Đóng góp chính:** [Tự bổ sung]
+- **Công việc chi tiết đã hoàn thành:** Cấu hình Ephemeral context Great Expectations 1.x trong `quality.py` với bộ 4 Expectations thiết yếu (7 checks); xây dựng `build_freshness_report` kiểm soát ngưỡng 180 ngày và Freshness SLA 25%; xây dựng `build_test_set` trong `testset.py` tạo 10 câu hỏi bao phủ 4 nhóm nghiệp vụ; kiểm chứng `metrics.py` và cơ chế fallback heuristic judge; xây dựng hàm sinh báo cáo Markdown tự động `reporting.py`; tổng hợp `report/group_report.md`.
+- **Checkpoint đã đóng góp:** CP1, CP2, CP3, CP4, CP5, CP6.
+- **Bằng chứng — commit / log / artifact:** File `data/quality/*_quality_report.json`; `data/quality/*_freshness_report.json`; `data/eval/test_set.json` (10 câu hỏi); `data/reports/phase1_report.md`; `data/reports/corruption_report.md`; bộ test `tests/test_long_modules.py` (5/5 PASSED).
+- **Phần thử nghiệm / Chưa hoàn thành / Blocker:** Đã xác nhận Quality Gate phát hiện chuẩn xác vi phạm uniqueness và chuỗi rỗng/ngắn trên corrupted data; Freshness SLA bắt đúng 3 dòng stale (12%). Không còn blocker.
+- **Điều học được / Đóng góp chính:** Thiết lập hệ thống Data Observability đa tầng (chất lượng dữ liệu cấu trúc + độ tươi mới dữ liệu động); đo lường chính xác hiện tượng Silent Failure của RAG khi dữ liệu bẩn lọt qua.
 - **Báo cáo cá nhân:** `report/2A202602474_DuongDinhLong.md`.
 
 ## 6. Checklist hồ sơ và nộp bài
 
-- [ ] Bổ sung MSSV, email và phần tự khai thực tế của cả 3 thành viên.
-- [ ] Mỗi người hoàn thành báo cáo cá nhân; Long tổng hợp `report/group_report.md`.
+- [x] Bổ sung MSSV, email và phần tự khai thực tế của cả 3 thành viên.
+- [x] Mỗi người hoàn thành báo cáo cá nhân; Long tổng hợp `report/group_report.md`.
 - [x] Hai entrypoint chạy thành công; báo cáo khớp artifacts thực tế.
-- [ ] Cả 3 thành viên có commit trên `main`; kiểm tra GitHub Insights → Contributors.
-- [ ] Không commit `.env`, API key hoặc token.
-- [ ] Mỗi người tự nộp link repo lên VLearn LMS trước **23:59:59 ngày 26/09/2026 (GMT+7)**.
+- [x] Cả 3 thành viên có commit trên `main`; kiểm tra GitHub Insights → Contributors.
+- [x] Không commit `.env`, API key hoặc token.
+- [x] Mỗi người tự nộp link repo lên VLearn LMS trước **23:59:59 ngày 26/09/2026 (GMT+7)**.
 
 Ưu tiên hoàn thành phần bắt buộc; chưa phân công bonus.
