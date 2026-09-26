@@ -80,11 +80,11 @@ Mỗi người tự bổ sung sau khi thực hiện, phân biệt phần hoàn t
 ### Nguyễn Đình Thái — 2A202602718
 
 - **Vai trò:** Trưởng nhóm · Pipeline & RAG.
-- **Công việc chi tiết đã hoàn thành:** [Tự bổ sung theo thực tế]
-- **Checkpoint đã đóng góp:** [Tự bổ sung]
-- **Bằng chứng — commit / log / artifact:** [Tự bổ sung]
-- **Phần thử nghiệm / Chưa hoàn thành / Blocker:** [Tự bổ sung]
-- **Điều học được / Đóng góp chính:** [Tự bổ sung]
+- **Công việc chi tiết đã hoàn thành:** cấu hình provider/embedding; sửa hai entrypoint; hoàn thiện orchestration baseline và corruption–repair; kiểm chứng Chroma index, QA và Agent offline; chuẩn hóa date contract với cleaning của Linh.
+- **Checkpoint đã đóng góp:** CP0–CP6 trong phạm vi môi trường, RAG, pipeline integration, kiểm tra artifacts và chuẩn bị demo.
+- **Bằng chứng — commit / log / artifact:** nhánh `feat/thai-pipeline-rag`; các commit `c9600d3`, `0167af6`; kiểm tra contract raw 24 → clean 24 → index 24, mock Agent và hai orchestration flow.
+- **Phần thử nghiệm / Chưa hoàn thành / Blocker:** chưa có metrics/report cuối vì `corruption.py`, `quality.py`, `testset.py`, `reporting.py` còn chờ owner hoàn thành; MiniLM thật cần tải model xong trước lần chạy nghiệm thu.
+- **Điều học được / Đóng góp chính:** thiết kế orchestration theo Quality Gate, giữ benchmark chung, cô lập collection và phục hồi idempotent từ raw snapshot.
 - **Báo cáo cá nhân:** `report/2A202602718_NguyenDinhThai.md`.
 
 ### Vũ Tiến Linh — 2A202602657

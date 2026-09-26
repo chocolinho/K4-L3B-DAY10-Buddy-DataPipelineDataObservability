@@ -71,6 +71,14 @@ Mặc định pipeline ưu tiên snapshot `data/raw/crossref_records.json`, sau 
 
 Pipeline dừng trước bước indexing nếu baseline không vượt qua Quality Gate. Cảnh báo freshness được giữ nguyên trong báo cáo và không sửa dữ liệu để ép trạng thái đạt.
 
+Sau khi baseline hoàn thành, chạy corruption và repair:
+
+```bash
+python script/run_corruption_flow.py
+```
+
+Luồng này dùng lại đúng evaluation set của baseline, tạo collection `papers-corrupted` và `papers-repaired`, kiểm tra repair idempotent từ raw snapshot, rồi xuất metrics và báo cáo so sánh ba trạng thái. Dữ liệu corrupted được tiếp tục đánh giá ngay cả khi Quality Gate báo lỗi để đo tác động; dữ liệu repaired phải vượt qua Quality Gate trước khi index.
+
 ## Học viên cần làm gì?
 
 1. Hoàn thiện **Data Quality Gate** (Great Expectations 1.x) trong `src/observability/quality.py`
