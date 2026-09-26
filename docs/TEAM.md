@@ -3,7 +3,7 @@
 - **Tên nhóm:** Buddy
 - **Mã lớp / Bài lab:** `K4-L3B-DAY10`
 - **Repository nộp bài:** `K4-L3B-DAY10-Buddy-DataPipelineDataObservability`
-- **Kế hoạch chi tiết:** [PHAN_CONG_NHOM.md](PHAN_CONG_NHOM.md)
+
 
 ## 1. Thành viên
 
