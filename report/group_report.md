@@ -1,6 +1,6 @@
 # Báo cáo nhóm Buddy — Day 10: Data Pipeline & Data Observability
 
-> Trạng thái: báo cáo tiến độ dựa trên artifact trong repository ngày 26/09/2026. Chưa phải báo cáo kết quả ba trạng thái để nộp cuối cùng.
+> Trạng thái: báo cáo kết quả tích hợp dựa trên artifacts sinh ngày 26/09/2026.
 
 ## Nhóm và phân công
 
@@ -16,7 +16,7 @@ Phân công là kế hoạch làm việc. Đóng góp cá nhân cần được x
 
 `Crossref raw → cleaning → quality/freshness → Chroma index → QA/evaluation → báo cáo baseline`.
 
-Luồng thí nghiệm dự kiến tiếp tục từ baseline qua corruption, đánh giá dữ liệu lỗi, repair từ raw, rồi đánh giá lại bằng cùng test set. Baseline và repair phải dùng cùng raw snapshot và cùng mốc `run_date` trong một lần so sánh.
+Luồng thí nghiệm tiếp tục từ baseline qua corruption, đánh giá dữ liệu lỗi, repair từ raw, rồi đánh giá lại bằng cùng test set. Baseline và repair dùng cùng raw snapshot và cùng mốc `run_date` trong một lần so sánh.
 
 Snapshot hiện có tại `data/raw/crossref_records.json` gồm 24 bài. Cleaning tạo 24 dòng, 24 `paper_id` duy nhất và các cột phục vụ embedding/evaluation. Không có bài nào trong snapshot có category nguồn; hai câu hỏi category trong benchmark dùng ground truth “No categories listed in the source metadata.” Đây là giới hạn của dữ liệu, không phải bằng chứng hệ thống suy luận được category.
 
@@ -40,18 +40,19 @@ Evaluator tính `retrieval_hit_rate`, `mean_token_f1`, `judge_accuracy`, `mean_j
 
 | Metric | Baseline | Corrupted | Repaired |
 |---|---:|---:|---:|
-| `retrieval_hit_rate` | Chưa đo | Chưa đo | Chưa đo |
-| `mean_token_f1` | Chưa đo | Chưa đo | Chưa đo |
-| `judge_accuracy` | Chưa đo | Chưa đo | Chưa đo |
-| `mean_judge_score` | Chưa đo | Chưa đo | Chưa đo |
+| `retrieval_hit_rate` | 1.000 | 0.900 | 1.000 |
+| `mean_token_f1` | 0.800 | 0.800 | 0.800 |
+| `judge_accuracy` | 0.800 | 0.800 | 0.800 |
+| `mean_judge_score` | 4.200 | 4.200 | 4.200 |
 
-Không có kết luận về suy giảm hay phục hồi trước khi ba file metrics thực tế được tạo từ cùng benchmark.
+Ba file metrics được tạo từ cùng benchmark 10 câu. Corruption làm Hit Rate giảm 0.100 và repair phục hồi về 1.000. Token F1 và chỉ số judge không đổi trong lần chạy heuristic. Corrupted Quality Gate thất bại, trong khi baseline và repaired đều đạt; corrupted có 3/25 dòng stale (12%) nên vẫn nằm trong Freshness SLA 25%.
 
-## Trạng thái tích hợp và bước còn lại
+## Trạng thái tích hợp và nghiệm thu
 
-- Baseline đã tạo clean data, quality report, freshness report và test set. Bước embedding cần tải mô hình `sentence-transformers/all-MiniLM-L6-v2`; lần chạy hiện tại chưa tạo index, metrics hoặc `phase1_report.md`.
-- `src/ingestion/corruption.py` và `src/pipelines/corruption_flow.py` còn `NotImplementedError`; chưa thể đo corrupted/repaired hoặc xuất `corruption_report.md`.
-- Sau khi hai luồng chạy thành công, điền bảng metrics ở trên từ `data/results/*.json`, phân tích từng corruption bằng `corruption_log.json`, rồi kiểm tra báo cáo sinh tự động khớp artifact.
-- Mỗi thành viên xác nhận đóng góp trong `docs/TEAM.md`, nộp báo cáo cá nhân và có commit đúng tác giả trên nhánh `main`.
+- `script/run_phase1.py` và `script/run_corruption_flow.py` đều kết thúc với exit code 0.
+- ChromaDB có ba collection độc lập: baseline 24, corrupted 25 và repaired 24 document.
+- Corruption log ghi đủ 6 dạng lỗi: bỏ 4 bản ghi mới, blank 2 summary, chèn noise 2 summary, rút ngắn 2 title, làm cũ 2 ngày xuất bản và thêm 5 dòng trùng.
+- Chạy lại corruption flow giữ repaired JSON cùng SHA-256 và collection repaired vẫn có 24 document, xác nhận repair không tích lũy dòng trùng.
+- Metrics dùng heuristic judge vì nghiệm thu chạy với `LLM_PROVIDER=mock`; Ragas chưa bật. Mỗi thành viên vẫn cần xác nhận phần tự khai và nộp link LMS cá nhân.
 
 Không chỉnh ngày xuất bản, ngưỡng freshness hoặc số liệu báo cáo để làm đẹp kết quả.

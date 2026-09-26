@@ -19,8 +19,8 @@
 | Cấu hình và môi trường | `src/core/config.py`, `.env.example`, `README.md` | Biến môi trường và cấu trúc repo | `Settings`, đường dẫn artifacts, hướng dẫn cài/chạy | Hoàn thành |
 | Embedding và vector index | `src/retrieval/embeddings.py`, `src/retrieval/index.py` | Clean dataframe | 3 collection độc lập và embedding manifests | Hoàn thành code và contract test |
 | QA và Agent | `src/retrieval/qa.py`, `llm.py`, `agent.py` | Câu hỏi và index | QA có cấu trúc, provider router, Agent online/offline | Hoàn thành code; mock đã chạy thực tế |
-| Baseline orchestration | `src/pipelines/phase1.py`, `script/run_phase1.py` | Raw/clean, quality, benchmark | Baseline metrics, answers và phase-1 report | Hoàn thành orchestration; chờ module Long để chạy cuối |
-| Corruption/repair orchestration | `src/pipelines/corruption_flow.py`, `script/run_corruption_flow.py` | Baseline artifacts, corruption, raw snapshot | Corrupted/repaired metrics và comparison report | Hoàn thành orchestration; chờ module Linh/Long để chạy cuối |
+| Baseline orchestration | `src/pipelines/phase1.py`, `script/run_phase1.py` | Raw/clean, quality, benchmark | Baseline metrics, answers và phase-1 report | Hoàn thành; chạy E2E exit code 0 |
+| Corruption/repair orchestration | `src/pipelines/corruption_flow.py`, `script/run_corruption_flow.py` | Baseline artifacts, corruption, raw snapshot | Corrupted/repaired metrics và comparison report | Hoàn thành; chạy E2E và chạy lặp exit code 0 |
 | Tài liệu và điều phối | `README.md`, `docs/TEAM.md`, `docs/PHAN_CONG_NHOM.md` | Rubric và checkpoint | Phân công, contract, mốc bàn giao, hướng dẫn tái hiện | Hoàn thành |
 
 ## 3. Kết quả theo vai trò
@@ -68,7 +68,7 @@ Hai lệnh nghiệm thu cuối cùng:
 .venv/Scripts/python.exe script/run_corruption_flow.py
 ```
 
-Hiện `run_phase1.py` đã đi qua ingestion/cleaning và dừng tại `run_data_quality_checks()` vì module của Long chưa hoàn thành. `run_corruption_flow.py` chủ động báo thiếu baseline artifacts cho tới khi phase 1 chạy xong.
+Ngày 26/09/2026, cả hai lệnh đã chạy hoàn chỉnh bằng model `sentence-transformers/all-MiniLM-L6-v2` trong chế độ cache offline và `LLM_PROVIDER=mock`. Baseline tạo 24 vector; corrupted tạo 25 vector; repaired tạo lại 24 vector. Chạy lại corruption flow vẫn giữ repaired JSON cùng SHA-256 và collection repaired vẫn có 24 document.
 
 ## 6. Quyết định kỹ thuật quan trọng
 
@@ -92,11 +92,11 @@ Hiện `run_phase1.py` đã đi qua ingestion/cleaning và dừng tại `run_dat
 - **Nguyên nhân:** fake chat model không hỗ trợ tool binding mà `create_agent()` yêu cầu.
 - **Cách xử lý:** triển khai `MockPaperAgent` local, gọi index trực tiếp và trả `AIMessage` có kết quả retrieval.
 
-### Blocker liên-module còn lại
+### Tích hợp các module liên thành viên
 
-- `src/ingestion/corruption.py` chưa triển khai 6 lỗi dữ liệu.
-- `src/observability/quality.py`, `reporting.py` và `src/evaluation/testset.py` chưa triển khai.
-- Vì vậy chưa sinh metrics và báo cáo cuối; không ghi số liệu giả vào báo cáo này.
+- Đã tích hợp `corruption.py` với đủ 6 dạng lỗi, seed cục bộ và log chứa danh sách `paper_id` bị tác động.
+- Đã tích hợp Quality Gate, freshness, benchmark 10 câu và reporting từ nhánh `main`.
+- Metrics dùng heuristic judge vì lần nghiệm thu chạy với provider `mock`; Ragas để ở trạng thái tắt theo cấu hình mặc định.
 
 ## 8. Hiểu biết luồng end-to-end
 
@@ -106,13 +106,13 @@ Dữ liệu Crossref được lưu nguyên bản để bảo toàn lineage, pars
 
 | Metric/signal | Baseline | Corrupted | Repaired |
 |---|---:|---:|---:|
-| `retrieval_hit_rate` | Chờ chạy E2E | Chờ chạy E2E | Chờ chạy E2E |
-| `mean_token_f1` | Chờ chạy E2E | Chờ chạy E2E | Chờ chạy E2E |
-| `judge_accuracy` | Chờ chạy E2E | Chờ chạy E2E | Chờ chạy E2E |
-| `mean_judge_score` | Chờ chạy E2E | Chờ chạy E2E | Chờ chạy E2E |
-| Quality/freshness | Chờ module Long | Chờ module Long | Chờ module Long |
+| `retrieval_hit_rate` | 1.000 | 0.900 | 1.000 |
+| `mean_token_f1` | 0.800 | 0.800 | 0.800 |
+| `judge_accuracy` | 0.800 | 0.800 | 0.800 |
+| `mean_judge_score` | 4.200 | 4.200 | 4.200 |
+| Quality/freshness | PASS / PASS | FAIL / PASS | PASS / PASS |
 
-Tôi chỉ cập nhật bảng này sau khi hai pipeline chạy thành công và các số liệu khớp artifacts trong `data/results/` và `data/quality/`.
+Corruption làm Hit Rate giảm 0.100; repair phục hồi về đúng baseline. Token F1 và các chỉ số judge không đổi trong lần chạy heuristic này. Dữ liệu corrupted có 3/25 dòng stale (12%), nên vẫn đạt Freshness SLA 25% nhưng thất bại Quality Gate vì các lỗi completeness, uniqueness và độ dài.
 
 ## 10. Cam kết
 

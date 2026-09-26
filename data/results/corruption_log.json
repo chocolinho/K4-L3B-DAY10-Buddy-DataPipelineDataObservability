@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "initial_rows": 24,
+    "random_seed": 42,
+    "final_rows": 25
+  },
+  "drop_latest_records": {
+    "count": 4,
+    "paper_ids": [
+      "10.21203/rs.3.rs-10489777/v1",
+      "10.70267/aitia.2026482489",
+      "10.21203/rs.3.rs-10349437/v1",
+      "10.54254/2755-2721/2026.36624"
+    ]
+  },
+  "blank_summary": {
+    "count": 2,
+    "paper_ids": [
+      "10.28932/jutisi.v12i2.13099",
+      "10.47576/2949-1894.2026.7.7.023"
+    ]
+  },
+  "inject_noise": {
+    "count": 2,
+    "paper_ids": [
+      "10.63646/kpqm1958",
+      "10.20944/preprints202604.0339.v1"
+    ]
+  },
+  "truncate_title": {
+    "count": 2,
+    "paper_ids": [
+      "10.52060/juptik.v4i1.4318",
+      "10.20944/preprints202608.1849.v1"
+    ]
+  },
+  "stale_date": {
+    "count": 2,
+    "paper_ids": [
+      "10.28932/jutisi.v12i2.13099",
+      "10.21079/11681/50309"
+    ]
+  },
+  "duplicate_rows": {
+    "count": 5,
+    "paper_ids": [
+      "10.21079/11681/50309",
+      "10.1093/sleep/zsag091.0346",
+      "10.2196/preprints.106157",
+      "10.3390/buildings16132637",
+      "10.21203/rs.3.rs-10178277/v1"
+    ]
+  }
+}
