@@ -80,11 +80,12 @@ Mỗi người tự bổ sung sau khi thực hiện, phân biệt phần hoàn t
 ### Nguyễn Đình Thái — 2A202602718
 
 - **Vai trò:** Trưởng nhóm · Pipeline & RAG.
-- **Công việc chi tiết đã hoàn thành:** [Tự bổ sung theo thực tế]
-- **Checkpoint đã đóng góp:** [Tự bổ sung]
-- **Bằng chứng — commit / log / artifact:** [Tự bổ sung]
-- **Phần thử nghiệm / Chưa hoàn thành / Blocker:** [Tự bổ sung]
-- **Điều học được / Đóng góp chính:** [Tự bổ sung]
+- **Công việc chi tiết đã hoàn thành:** cấu hình provider/embedding; sửa hai entrypoint; hoàn thiện orchestration baseline và corruption–repair; kiểm chứng Chroma index, QA và Agent offline; chuẩn hóa date contract với cleaning của Linh.
+- **Checkpoint đã đóng góp:** CP0–CP6 trong phạm vi môi trường, RAG, pipeline integration, kiểm tra artifacts và chuẩn bị demo.
+- **Bằng chứng — commit / log / artifact:** nhánh `feat/thai-pipeline-rag`; các commit `c9600d3`, `0167af6`, `620ac95`; raw 24 → baseline index 24, corrupted index 25, repaired index 24; hai entrypoint và lần chạy lặp corruption flow đều exit code 0.
+- **Kết quả tích hợp:** Hit Rate `1.000 → 0.900 → 1.000`; Token F1 `0.800 → 0.800 → 0.800`; Quality `PASS → FAIL → PASS`; repaired JSON giữ nguyên SHA-256 khi chạy lặp.
+- **Phần thử nghiệm / Chưa hoàn thành / Blocker:** lần nghiệm thu dùng heuristic judge với `LLM_PROVIDER=mock`; Ragas chưa bật. Không còn blocker cho hai pipeline bắt buộc.
+- **Điều học được / Đóng góp chính:** thiết kế orchestration theo Quality Gate, giữ benchmark chung, cô lập collection và phục hồi idempotent từ raw snapshot.
 - **Báo cáo cá nhân:** `report/2A202602718_NguyenDinhThai.md`.
 
 ### Vũ Tiến Linh — 2A202602657
@@ -111,7 +112,7 @@ Mỗi người tự bổ sung sau khi thực hiện, phân biệt phần hoàn t
 
 - [ ] Bổ sung MSSV, email và phần tự khai thực tế của cả 3 thành viên.
 - [ ] Mỗi người hoàn thành báo cáo cá nhân; Long tổng hợp `report/group_report.md`.
-- [ ] Hai entrypoint chạy thành công; báo cáo khớp artifacts thực tế.
+- [x] Hai entrypoint chạy thành công; báo cáo khớp artifacts thực tế.
 - [ ] Cả 3 thành viên có commit trên `main`; kiểm tra GitHub Insights → Contributors.
 - [ ] Không commit `.env`, API key hoặc token.
 - [ ] Mỗi người tự nộp link repo lên VLearn LMS trước **23:59:59 ngày 26/09/2026 (GMT+7)**.

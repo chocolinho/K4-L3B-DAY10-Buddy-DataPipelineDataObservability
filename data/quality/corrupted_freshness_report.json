@@ -1,0 +1,11 @@
+{
+  "latest_published": "2026-09-04",
+  "oldest_published": "2025-07-10",
+  "stale_rows": 3,
+  "invalid_age_rows": 0,
+  "total_rows": 25,
+  "stale_ratio": 0.12,
+  "threshold_days": 180,
+  "max_stale_ratio": 0.25,
+  "is_fresh": true
+}

@@ -1,0 +1,53 @@
+[
+  {
+    "id": "q01",
+    "question": "Summarize the paper 'JADE-Plus: A Multimodal Agentic Retrieval-Augmented Generation Large Language Framework for Diagnostic Support in Jawbone Lesions: Development and Technical Validation Study'.",
+    "answer": "Abstract Diagnosing jawbone lesions in oral and maxillofacial radiology remains challenging due to overlapping radiological features and the need for integrated clinical reasoning.",
+    "retrieved_doc_ids": [
+      "10.1007/s10278-026-02086-9",
+      "10.1093/sleep/zsag091.0346",
+      "10.20944/preprints202608.1849.v1",
+      "10.36948/ijfmr.2026.v08i04.85777"
+    ],
+    "retrieved_titles": [
+      "JADE-Plus: A Multimodal Agentic Retrieval-Augmented Generation Large Language Framework for Diagnostic Support in Jawbone Lesions: Development and Technical Validation Study",
+      "0346 Retrieval Augmented Generation Improves Large Language Model Performance in Sleep Medicine",
+      "An Agentic Retrieval-Augmented Vision-Language Recommendation System for Hyperdimensional Encoding Optimization",
+      "A Framework for Adaptive Knowledge-Augmented Mizo Large Language Models Using Retrieval-Augmented Generation and Continual Learning"
+    ]
+  },
+  {
+    "id": "q02",
+    "question": "Summarize the paper '0346 Retrieval Augmented Generation Improves Large Language Model Performance in Sleep Medicine'.",
+    "answer": "Abstract Introduction While Large Language Models (LLMs) offer generative capabilities, generic models often lack domain-specific grounding, leading to hallucinations in high-stakes contexts.",
+    "retrieved_doc_ids": [
+      "10.1093/sleep/zsag091.0346",
+      "10.36948/ijfmr.2026.v08i04.85777",
+      "10.70267/aitia.2026482489",
+      "10.54254/2755-2721/2026.36624"
+    ],
+    "retrieved_titles": [
+      "0346 Retrieval Augmented Generation Improves Large Language Model Performance in Sleep Medicine",
+      "A Framework for Adaptive Knowledge-Augmented Mizo Large Language Models Using Retrieval-Augmented Generation and Continual Learning",
+      "Retrieval-Augmented Generation for Large Language Model-Based Intelligent Assistants: A Review",
+      "Advances in Reinforcement Learning for Retrieval-Augmented Generation in Large Language Model"
+    ]
+  },
+  {
+    "id": "q03",
+    "question": "Summarize the paper 'Retrieval-Augmented Large Language Model Agents for Automated Scientific Literature Review Generation'.",
+    "answer": "This study investigates a method that integrates retrieval-augmented mechanisms into large language model agents for scientific literature review generation.",
+    "retrieved_doc_ids": [
+      "10.20944/preprints202604.0339.v1",
+      "10.63646/kpqm1958",
+      "10.55041/isjem07213",
+      "10.36948/ijfmr.2026.v08i04.85777"
+    ],
+    "retrieved_titles": [
+      "Retrieval-Augmented Large Language Model Agents for Automated Scientific Literature Review Generation",
+      "The Age of Autonomous Agents: A Bibliometric Review of Agentic AI Architectures, Applications, and Emerging Challenges",
+      "Speculative Retrieval-Augmented Generation for Cost-Efficient Large Language Model Inference",
+      "A Framework for Adaptive Knowledge-Augmented Mizo Large Language Models Using Retrieval-Augmented Generation and Continual Learning"
+    ]
+  }
+]

@@ -46,7 +46,7 @@ def _build_demo_answers(test_set, settings, index) -> list[dict[str, Any]]:
     return demo_answers
 
 
-def _dataframe_records(df) -> list[dict[str, Any]]:
+def dataframe_records(df) -> list[dict[str, Any]]:
     """Convert a dataframe into JSON-safe records with stable date-only fields."""
     records = json.loads(df.to_json(orient="records", date_format="iso"))
     for record in records:
@@ -70,7 +70,7 @@ def main() -> None:
     if clean_df.empty:
         raise RuntimeError("Cleaning produced an empty dataframe; baseline indexing was stopped.")
     write_csv(clean_df, settings.paths.clean_csv)
-    clean_records = _dataframe_records(clean_df)
+    clean_records = dataframe_records(clean_df)
     write_json(settings.paths.clean_json, clean_records)
 
     quality = run_data_quality_checks(clean_df, settings, "baseline")
