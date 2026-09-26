@@ -71,7 +71,6 @@ Mốc thời gian tính từ lúc bắt đầu bài lab; dành khoảng 5 phút 
 - Nghiệm thu hai lệnh `python script/run_phase1.py` và `python script/run_corruption_flow.py`; kiểm tra đủ artifacts, 6 dạng lỗi, 3 bộ metrics, 3 collection, báo cáo so sánh và tính idempotent.
 - Các kết luận phải dựa trên số liệu thực tế. Kiểm chứng QA và Agent riêng; ghi rõ provider đã thử và hạn chế còn lại.
 
-Chi tiết giao diện, tiêu chí bàn giao từng file và kịch bản kiểm tra nằm trong [PHAN_CONG_NHOM.md](PHAN_CONG_NHOM.md).
 
 ## 5. Tự khai đóng góp cá nhân
 
